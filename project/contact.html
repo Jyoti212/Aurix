@@ -21,6 +21,7 @@
       <a href="projects.html">OUR PROJECTS</a>
       <a href="about.html">OUR PHILOSOPHY</a>
       <a href="community.html">OUR COMMUNITY</a>
+      <a class="nav-cta" href="career.html">CAREERS</a>
       <a class="nav-cta" href="contact.html">CONTACT US</a>
     </nav>
 
@@ -32,11 +33,15 @@
 
 <main>
 
-  <section class="page-hero">
-    <div class="page-hero-inner">
-      <p class="eyebrow">Get In Touch</p>
-      <h1>Let's talk about <em>your next address.</em></h1>
-      <p>Reach out for site visits, floor plans, pricing or general queries — our team responds within one business day.</p>
+  <section class="page-hero projects-page-hero">
+    <img class="projects-hero-image" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&amp;fit=crop&amp;w=2400&amp;q=85" alt="" fetchpriority="high">
+    <div class="projects-hero-shade" aria-hidden="true"></div>
+    <div class="page-hero-inner projects-page-hero-inner">
+      <div class="projects-hero-box">
+        <p class="eyebrow">Get In Touch</p>
+        <h1>Let's talk about <em>your next address.</em></h1>
+        <p>Reach out for site visits, floor plans, pricing or general queries — our team responds within one business day.</p>
+      </div>
     </div>
   </section>
 
@@ -84,22 +89,22 @@
           <div class="form-row">
             <div class="field">
               <label for="fname">Full Name</label>
-              <input type="text" id="fname" name="fname" required>
+              <input type="text" id="fname" name="fname" autocomplete="name" pattern="[A-Za-zÀ-ÖØ-öø-ÿ]+(?: [A-Za-zÀ-ÖØ-öø-ÿ]+)*" title="Use letters and spaces only." minlength="2" required>
             </div>
             <div class="field">
               <label for="fphone">Phone Number</label>
-              <input type="tel" id="fphone" name="fphone" required>
+              <input type="tel" id="fphone" name="fphone" autocomplete="tel" inputmode="numeric" pattern="[0-9]{10}" minlength="10" maxlength="10" title="Enter a 10-digit mobile number." required>
             </div>
           </div>
 
           <div class="field">
             <label for="femail">Email Address</label>
-            <input type="email" id="femail" name="femail" required>
+            <input type="email" id="femail" name="femail" autocomplete="email" required>
           </div>
 
           <div class="field">
             <label for="fproject">Interested Project</label>
-            <select id="fproject" name="fproject">
+            <select id="fproject" name="fproject" required>
               <option value="">Select a project</option>
               <option value="ved-vihar">Ved Vihar, Kothrud</option>
               <option value="bloomfield">Bloomfield, Ambegaon</option>
@@ -110,7 +115,7 @@
 
           <div class="field">
             <label for="fmessage">Message</label>
-            <textarea id="fmessage" name="fmessage" placeholder="Tell us what you're looking for..."></textarea>
+            <textarea id="fmessage" name="fmessage" placeholder="Tell us what you're looking for..." required></textarea>
           </div>
 
           <button type="submit" class="btn btn-gold form-submit">Send Enquiry</button>

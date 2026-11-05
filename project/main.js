@@ -8,12 +8,25 @@ window.addEventListener('scroll', onScroll, { passive: true });
 const navToggle = document.getElementById('navToggle');
 const mainNav = document.getElementById('mainNav');
 if (navToggle && mainNav) {
+  const closeNav = () => {
+    mainNav.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+  };
+
   navToggle.addEventListener('click', () => {
     const isOpen = mainNav.classList.toggle('open');
-    navToggle.setAttribute('aria-expanded', isOpen);
+    navToggle.setAttribute('aria-expanded', String(isOpen));
   });
   mainNav.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => mainNav.classList.remove('open'));
+    a.addEventListener('click', closeNav);
+  });
+  document.addEventListener('click', event => {
+    if (!mainNav.contains(event.target) && !navToggle.contains(event.target)) {
+      closeNav();
+    }
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') closeNav();
   });
 }
 
@@ -62,8 +75,32 @@ if (carousel && carPrev && carNext) {
 
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
+  const fields = [...contactForm.querySelectorAll('input[required], select[required], textarea[required]')];
+  const namePattern = /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?: [A-Za-zÀ-ÖØ-öø-ÿ]+)*$/;
+  const emailPattern = /^[A-Z0-9.!#$%&'*+/=?^_`{|}~-]+@(?:[A-Z0-9](?:[A-Z0-9-]*[A-Z0-9])?\.)+[A-Z]{2,}$/i;
+  const validateField = (field) => {
+    field.setCustomValidity('');
+    if (field.required && !field.value.trim()) {
+      field.setCustomValidity('Please complete this field.');
+    } else if (field.id === 'fname' && !namePattern.test(field.value.trim())) {
+      field.setCustomValidity('Use letters and spaces only for your name.');
+    } else if (field.type === 'tel' && !/^\d{10}$/.test(field.value.trim())) {
+      field.setCustomValidity('Enter a 10-digit mobile number.');
+    } else if (field.type === 'email' && !emailPattern.test(field.value.trim())) {
+      field.setCustomValidity('Enter a valid email address with a domain, such as name@example.com.');
+    }
+  };
+
+  fields.forEach((field) => {
+    field.addEventListener('input', () => validateField(field));
+    field.addEventListener('change', () => validateField(field));
+  });
+
   contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
+    fields.forEach(validateField);
+    if (!contactForm.reportValidity()) return;
+
     contactForm.classList.add('is-hidden');
     document.getElementById('formSuccess').classList.add('is-visible');
   });
